@@ -14,7 +14,7 @@ def index():
 def chatbot():
     user_input = request.form['question']
     response = requests.post(API_URL, json={"prompt": user_input})
-    
+
     if response.status_code == 200:
         data = response.json()
         answer = data['result']['data']  # Chỉ lấy câu trả lời
@@ -23,4 +23,4 @@ def chatbot():
         return jsonify({'answer': 'Có lỗi xảy ra!'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
