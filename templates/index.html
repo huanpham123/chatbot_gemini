@@ -65,6 +65,10 @@
     <script>
         document.getElementById('submit').addEventListener('click', function() {
             const question = document.getElementById('question').value;
+            if (question.trim() === "") {
+                alert("Vui lòng nhập câu hỏi!");
+                return;
+            }
             fetch('/', {
                 method: 'POST',
                 headers: {
@@ -72,12 +76,18 @@
                 },
                 body: new URLSearchParams({ question })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Có lỗi xảy ra!');
+                }
+                return response.json();
+            })
             .then(data => {
                 document.getElementById('answer').innerText = data.answer;
             })
             .catch(error => {
                 document.getElementById('answer').innerText = 'Có lỗi xảy ra!';
+                console.error('Error:', error);
             });
         });
     </script>
