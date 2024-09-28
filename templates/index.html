@@ -1,22 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #answer {
+            margin-top: 20px;
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Chat với Gemini</h1>
-    <form action="/ask" method="POST">
-        <input type="text" name="prompt" placeholder="Nhập câu hỏi của bạn" required>
-        <button type="submit">Gửi</button>
-    </form>
-
-    {% if response %}
-        <div id="response">
-            <h3>Câu trả lời của chatbot:</h3>
-            <p>{{ response }}</p>
+    <div class="container">
+        <h1>Chatbot</h1>
+        <div class="input-group">
+            <input type="text" id="question" placeholder="Nhập câu hỏi của bạn...">
+            <button id="submit">Gửi</button>
         </div>
-    {% endif %}
+        <div id="answer"></div>
+    </div>
+
+    <script>
+        document.getElementById('submit').addEventListener('click', function() {
+            const question = document.getElementById('question').value;
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ question })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('answer').innerText = data.answer;
+            })
+            .catch(error => {
+                document.getElementById('answer').innerText = 'Có lỗi xảy ra!';
+            });
+        });
+    </script>
 </body>
 </html>
