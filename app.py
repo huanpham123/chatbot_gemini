@@ -9,7 +9,7 @@ def index():
 
 @app.route('/ask', methods=['POST'])
 def ask():
-    prompt = request.form['prompt']
+    prompt = request.form['question']  # Đảm bảo sử dụng 'question' cho trường input
     api_url = f'https://deku-rest-api.gleeze.com/new/gemini?prompt={prompt}'
 
     try:
@@ -23,7 +23,7 @@ def ask():
     except Exception as e:
         chatbot_response = 'Có lỗi xảy ra khi kết nối API.'
 
-    return render_template('index.html', response=chatbot_response)
+    return {'answer': chatbot_response}  # Trả về JSON thay vì render lại template
 
 if __name__ == '__main__':
     app.run(debug=True)
