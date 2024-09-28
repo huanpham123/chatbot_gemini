@@ -56,7 +56,7 @@
     <div class="container">
         <h1>Chatbot</h1>
         <div class="input-group">
-            <input type="text" id="question" placeholder="Nhập câu hỏi của bạn...">
+            <input type="text" id="question" name="question" placeholder="Nhập câu hỏi của bạn...">
             <button id="submit">Gửi</button>
         </div>
         <div id="answer"></div>
@@ -69,7 +69,7 @@
                 alert("Vui lòng nhập câu hỏi!");
                 return;
             }
-            fetch('/', {
+            fetch('/ask', {  // Thay đổi đường dẫn để gọi đúng route
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
